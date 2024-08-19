@@ -16,3 +16,18 @@ class Category(models.Model):
         """Return category name."""
         return self.name
 
+
+class Course(models.Model):
+    """Model definition for Course."""
+
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        """Meta definition for Course."""
+
+        verbose_name = "Course"
+        verbose_name_plural = "Courses"
+
+    def __str__(self) -> str:
+        """Return course name."""
+        return self.name
