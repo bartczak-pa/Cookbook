@@ -1,2 +1,5 @@
+from django.shortcuts import render
 
-# Create your views here.
+
+def home(request) -> render:  # noqa: ANN001
+    return render(request, "recipes/home.html")
