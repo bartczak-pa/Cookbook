@@ -1,0 +1,28 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+    {% if categories %}
+
+        <div class="container text-center">
+        <h1 class="mt-4 mb-4">Categories</h1>
+            <div class="row justify-content-center mt-4">
+                {% for category in categories %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <!--TODO: Add category image -->
+                                <h5 class="card-title">{{ category.name }}</h5>
+                                <!--TODO: Add recipes amount -->
+                                <p class="card-text">Recipes: </p>
+                                <!--TODO: Replace link to category recipes list view -->
+                                <a href="#" class="btn btn-primary">See recipes</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <h1>No categories found</h1>
+    {% endif %}
+{% endblock content %}

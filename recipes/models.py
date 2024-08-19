@@ -6,6 +6,9 @@ class Category(models.Model):
 
     name = models.CharField(max_length=100, unique=True)
 
+    # TODO@pawel: Add image field
+    # https://github.com/bartczak-pa/Cookbook/issues/1
+
     class Meta:
         """Meta definition for Category."""
 
