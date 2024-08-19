@@ -56,3 +56,23 @@ class Recipe(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Content(models.Model):
+    """Model definition for Content."""
+
+    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="recipes")
+    cook_time = models.CharField(max_length=50)
+    prep_time = models.CharField(max_length=50)
+    total_time = models.CharField(max_length=50)
+    cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
+    servings = models.IntegerField()
+    calories = models.DecimalField(max_digits=10, decimal_places=2)
+    courses = models.ManyToManyField(Course, related_name="recipes")
+
+    class Meta:
+        verbose_name = "Content"
+        verbose_name_plural = "Content"
+
+    def __str__(self) -> str:
+        return self.recipe.title
