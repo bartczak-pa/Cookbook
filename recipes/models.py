@@ -81,7 +81,7 @@ class Content(models.Model):
 class Instruction(models.Model):
     """Model definition for Instruction."""
 
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='instructions')
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name="instructions")
     steps = models.TextField()
 
     class Meta:
@@ -90,3 +90,18 @@ class Instruction(models.Model):
 
     def __str__(self) -> str:
         return f"Instructions for {self.content.recipe.title}"
+
+
+class Ingredient(models.Model):
+    """Model definition for Ingredient."""
+
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='ingredients')
+    name = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Ingredient"
+        verbose_name_plural = "Ingredients"
+
+    def __str__(self) -> str:
+        return f"{self.quantity} of {self.name}"
