@@ -61,7 +61,7 @@ class Recipe(models.Model):
 class Content(models.Model):
     """Model definition for Content."""
 
-    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="recipes")
+    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
     cook_time = models.CharField(max_length=50)
     prep_time = models.CharField(max_length=50)
     total_time = models.CharField(max_length=50)
