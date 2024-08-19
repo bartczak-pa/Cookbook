@@ -10,13 +10,10 @@ class Category(models.Model):
     # https://github.com/bartczak-pa/Cookbook/issues/1
 
     class Meta:
-        """Meta definition for Category."""
-
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
     def __str__(self) -> str:
-        """Return category name."""
         return self.name
 
 
@@ -26,11 +23,23 @@ class Course(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        """Meta definition for Course."""
-
         verbose_name = "Course"
         verbose_name_plural = "Courses"
 
     def __str__(self) -> str:
-        """Return course name."""
         return self.name
+
+
+class Recipe(models.Model):
+    """Model definition for Recipe."""
+
+    title = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    original_link = models.URLField(max_length=255, blank=True)
+
+    class Meta:
+        verbose_name = "Recipe"
+        verbose_name_plural = "Recipes"
+
+    def __str__(self) -> str:
+        return self.title
