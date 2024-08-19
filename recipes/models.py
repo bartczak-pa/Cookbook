@@ -30,6 +30,19 @@ class Course(models.Model):
         return self.name
 
 
+class Cuisine(models.Model):
+    """Model definition for Cuisine."""
+
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name = "Cuisine"
+        verbose_name_plural = "Cuisines"
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Recipe(models.Model):
     """Model definition for Recipe."""
 
