@@ -76,3 +76,17 @@ class Content(models.Model):
 
     def __str__(self) -> str:
         return self.recipe.title
+
+
+class Instruction(models.Model):
+    """Model definition for Instruction."""
+
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='instructions')
+    steps = models.TextField()
+
+    class Meta:
+        verbose_name = "Instruction"
+        verbose_name_plural = "Instructions"
+
+    def __str__(self) -> str:
+        return f"Instructions for {self.content.recipe.title}"
