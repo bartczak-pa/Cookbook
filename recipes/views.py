@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.views.generic import DetailView, ListView
 
 from recipes.models import Category, Recipe
@@ -6,7 +7,7 @@ from recipes.models import Category, Recipe
 class CategoryListView(ListView):
     model = Category
     context_object_name = "categories"
-    queryset = Category.objects.all().order_by("name")
+    queryset = Category.objects.annotate(recipe_count=Count("recipe")).order_by("-recipe_count", "name")
     template_name = "recipes/category_list.html"
     paginate_by = 10
 
