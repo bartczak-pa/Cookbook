@@ -1,11 +1,6 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from recipes.models import Category, Recipe
-
-
-def home(request) -> render:  # noqa: ANN001
-    return render(request, "recipes/home.html")
 
 
 class CategoryListView(ListView):
@@ -22,3 +17,15 @@ class RecipeListView(ListView):
     queryset = Recipe.objects.all().order_by("title")
     template_name = "recipes/recipe_list.html"
     paginate_by = 15
+
+
+class RecipeDetailView(DetailView):
+    model = Recipe
+    context_object_name = "recipe"
+    template_name = "recipes/recipe_detail.html"
+
+    def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
+        context = super().get_context_data(**kwargs)
+        context["ingredients"] = self.object.content.ingredients.all()
+        context["instructions"] = self.object.content.instructions.all()
+        return context

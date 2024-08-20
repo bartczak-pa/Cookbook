@@ -89,13 +89,13 @@ class Instruction(models.Model):
         verbose_name_plural = "Instructions"
 
     def __str__(self) -> str:
-        return f"Instructions for {self.content.recipe.title}"
+        return self.steps
 
 
 class Ingredient(models.Model):
     """Model definition for Ingredient."""
 
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name='ingredients')
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name="ingredients")
     name = models.CharField(max_length=100)
     quantity = models.CharField(max_length=50)
 

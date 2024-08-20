@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mx-auto" style="width: 40rem;">
+        <div class="card-body text-center">
+            <h2 class="card-title">{{ recipe.title }}</h2>
+            <img src="https://via.placeholder.com/50" class="card-img-top mb-4" alt="Recipe Image">
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <p><strong>Total Time:</strong> {{ recipe.content.total_time }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Prep Time:</strong> {{ recipe.content.prep_time }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Cook Time:</strong> {{ recipe.content.cook_time }}</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <p><strong>Courses:</strong>
+                        {% for course in recipe.content.courses.all %}
+                            {{ course.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Cuisine:</strong> {{ recipe.content.cuisine.name }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Servings:</strong> {{ recipe.content.servings }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Calories:</strong> {{ recipe.content.calories }}</p>
+                </div>
+            </div>
+
+            <h3>Ingredients:</h3>
+            <ul class="list-group mb-3">
+                {% for ingredient in recipe.content.ingredients.all %}
+                    <li class="list-group-item">{{ ingredient.quantity }} of {{ ingredient.name }}</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Instructions:</h3>
+            {% for instruction in instructions %}
+            	<p>{{ instruction|escape|linebreaks }}</p>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
