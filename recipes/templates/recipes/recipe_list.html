@@ -1,4 +1,5 @@
 {% extends 'templates/base.html' %}
+{% load recipe_extras %}
 {% block content %}
     {% if recipes %}
 
@@ -12,7 +13,7 @@
                             <div class="card-body">
                                 <!--TODO: Add recipe image -->
                                 <h5 class="card-title">{{ recipe.title }}</h5>
-                                <p class="card-text">Total time: {{ recipe.content.total_time }}</p>
+                                <p class="card-text">Total time: {{ recipe.content.total_time|duration_in_minutes }}</p>
                                 <a href="{% url "recipe_detail" recipe.pk %}" class="btn btn-primary">View</a>
                             </div>
                         </div>
