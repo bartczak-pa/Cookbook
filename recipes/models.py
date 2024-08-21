@@ -64,9 +64,9 @@ class Content(models.Model):
     """Model definition for Content."""
 
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
-    cook_time = models.DurationField(default=datetime.timedelta())
-    prep_time = models.DurationField(default=datetime.timedelta())
-    total_time = models.DurationField(default=datetime.timedelta())
+    cook_time = models.DurationField()
+    prep_time = models.DurationField()
+    total_time = models.DurationField()
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
     servings = models.IntegerField()
     calories = models.DecimalField(max_digits=10, decimal_places=2)
