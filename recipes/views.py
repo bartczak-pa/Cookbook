@@ -31,7 +31,5 @@ class RecipeDetailView(DetailView):
     def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
         context = super().get_context_data(**kwargs)
         context["ingredients"] = self.object.content.ingredients.all()
-        context = super().get_context_data(**kwargs)
-        context["ingredients"] = self.object.content.ingredients.all()
         context["instructions"] = self.object.content.instructions.all()
         return context
