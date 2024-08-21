@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 
 class Category(models.Model):
     """Model definition for Category."""
@@ -62,9 +62,9 @@ class Content(models.Model):
     """Model definition for Content."""
 
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
-    cook_time = models.CharField(max_length=50)
-    prep_time = models.CharField(max_length=50)
-    total_time = models.CharField(max_length=50)
+    cook_time = models.DurationField(default=datetime.timedelta())
+    prep_time = models.DurationField(default=datetime.timedelta())
+    total_time = models.DurationField(default=datetime.timedelta())
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
     servings = models.IntegerField()
     calories = models.DecimalField(max_digits=10, decimal_places=2)

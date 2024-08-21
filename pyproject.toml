@@ -46,5 +46,7 @@ line-ending = "auto"
 [tool.ruff.lint.per-file-ignores]
 "**/tests/**/*.py" = [
     "S101", # asserts allowed in tests.
+    "PLR2004", # Ruff is pushing for constants instead of ints.
+    "ARG", # Unused function args -> fixtures nevertheless are functionally relevant.
 
 ]
