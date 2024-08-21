@@ -1,5 +1,7 @@
-from django.db import models
 import datetime
+
+from django.db import models
+
 
 class Category(models.Model):
     """Model definition for Category."""

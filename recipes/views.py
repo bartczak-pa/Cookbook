@@ -25,8 +25,8 @@ class RecipeDetailView(DetailView):
     context_object_name = "recipe"
     template_name = "recipes/recipe_detail.html"
 
-    def get_queryset(self):
-        return super().get_queryset().prefetch_related('content__ingredients')
+    def get_queryset(self) -> Recipe:
+        return super().get_queryset().prefetch_related("content__ingredients")
 
     def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
         context = super().get_context_data(**kwargs)
