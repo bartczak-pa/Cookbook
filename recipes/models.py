@@ -1,5 +1,3 @@
-import datetime
-
 from django.db import models
 
 
@@ -65,8 +63,6 @@ class Content(models.Model):
 
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
-    servings = models.IntegerField()
-    calories = models.DecimalField(max_digits=10, decimal_places=2)
     courses = models.ManyToManyField(Course, related_name="recipes")
 
     class Meta:
@@ -75,6 +71,21 @@ class Content(models.Model):
 
     def __str__(self) -> str:
         return self.recipe.title
+
+
+class NutritionalInfo(models.Model):
+    """Model definition for NutritionalInfo."""
+
+    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="nutritional_info")
+    servings = models.IntegerField()
+    calories = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = "NutritionalInfo"
+        verbose_name_plural = "NutritionalInfos"
+
+    def __str__(self) -> str:
+        return f"{self.recipe.title} - {self.servings} servings"
 
 
 class Timing(models.Model):
