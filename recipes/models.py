@@ -64,9 +64,6 @@ class Content(models.Model):
     """Model definition for Content."""
 
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
-    cook_time = models.DurationField()
-    prep_time = models.DurationField()
-    total_time = models.DurationField()
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
     servings = models.IntegerField()
     calories = models.DecimalField(max_digits=10, decimal_places=2)
@@ -78,6 +75,22 @@ class Content(models.Model):
 
     def __str__(self) -> str:
         return self.recipe.title
+
+
+class Timing(models.Model):
+    """Model definition for TimingInfo."""
+
+    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="timing_info")
+    cook_time = models.DurationField()
+    prep_time = models.DurationField()
+    total_time = models.DurationField()
+
+    class Meta:
+        verbose_name = "TimingInfo"
+        verbose_name_plural = "TimingInfos"
+
+    def __str__(self) -> str:
+        return f"{self.recipe.title} - {self.total_time}"
 
 
 class Instruction(models.Model):

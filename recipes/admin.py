@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Content, Course, Cuisine, Ingredient, Instruction, Recipe
+from .models import Category, Content, Course, Cuisine, Ingredient, Instruction, Recipe, Timing
 
 # Register your models here.
 admin.site.register(Category)
@@ -10,4 +10,7 @@ admin.site.register(Cuisine)
 admin.site.register(Content)
 admin.site.register(Instruction)
 admin.site.register(Ingredient)
+admin.site.register(Timing)
+
+
 

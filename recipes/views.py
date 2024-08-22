@@ -15,7 +15,7 @@ class CategoryListView(ListView):
 class RecipeListView(ListView):
     model = Recipe
     context_object_name = "recipes"
-    queryset = Recipe.objects.all().order_by("title")
+    queryset = Recipe.objects.all().select_related("timing_info").order_by("title")
     template_name = "recipes/recipe_list.html"
     paginate_by = 15
 
