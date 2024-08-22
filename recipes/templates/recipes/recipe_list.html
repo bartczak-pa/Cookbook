@@ -1,0 +1,27 @@
+{% extends 'templates/base.html' %}
+{% load recipe_extras %}
+{% block content %}
+    {% if recipes %}
+
+        <div class="container text-center">
+        <h1 class="mt-4 mb-4">All Recipes</h1>
+            <div class="row justify-content-center mt-4">
+                {% for recipe in recipes %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <!--TODO: Add recipe image -->
+                                <h5 class="card-title">{{ recipe.title }}</h5>
+                                <p class="card-text">Total time: {{ recipe.timing_info.total_time|duration_in_minutes }}</p>
+                                <a href="{% url "recipe_detail" recipe.pk %}" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <h1>No recipes found</h1>
+    {% endif %}
+{% endblock content %}
