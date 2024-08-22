@@ -50,8 +50,8 @@ class Recipe(models.Model):
     original_link = models.URLField(max_length=255, blank=True)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
-    courses = models.ManyToManyField(Course, related_name="recipes")
+    cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="cuisines")
+    courses = models.ManyToManyField(Course, related_name="courses")
 
     class Meta:
         verbose_name = "Recipe"
@@ -59,19 +59,6 @@ class Recipe(models.Model):
 
     def __str__(self) -> str:
         return self.title
-
-
-class Content(models.Model):
-    """Model definition for Content."""
-
-    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
-
-    class Meta:
-        verbose_name = "Content"
-        verbose_name_plural = "Content"
-
-    def __str__(self) -> str:
-        return self.recipe.title
 
 
 class NutritionalInfo(models.Model):
@@ -108,7 +95,7 @@ class Timing(models.Model):
 class Instruction(models.Model):
     """Model definition for Instruction."""
 
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name="instructions")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="instructions")
     steps = models.TextField()
 
     class Meta:
@@ -122,7 +109,7 @@ class Instruction(models.Model):
 class Ingredient(models.Model):
     """Model definition for Ingredient."""
 
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, related_name="ingredients")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
     name = models.CharField(max_length=100)
     quantity = models.CharField(max_length=50)
 

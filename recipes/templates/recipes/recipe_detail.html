@@ -23,13 +23,13 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <p><strong>Courses:</strong>
-                        {% for course in recipe.content.courses.all %}
+                        {% for course in recipe.courses.all %}
                             {{ course.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
                 </div>
                 <div class="col-md-3">
-                    <p><strong>Cuisine:</strong> {{ recipe.content.cuisine.name }}</p>
+                    <p><strong>Cuisine:</strong> {{ recipe.cuisine.name }}</p>
                 </div>
                 <div class="col-md-3">
                     <p><strong>Servings:</strong> {{ recipe.nutritional_info.servings }}</p>
@@ -41,7 +41,7 @@
 
             <h3>Ingredients:</h3>
             <ul class="list-group mb-3">
-                {% for ingredient in recipe.content.ingredients.all %}
+                {% for ingredient in recipe.ingredients.all %}
                     <li class="list-group-item">{{ ingredient.quantity }} of {{ ingredient.name }}</li>
                 {% endfor %}
             </ul>
