@@ -48,6 +48,7 @@ class Recipe(models.Model):
 
     title = models.CharField(max_length=255)
     original_link = models.URLField(max_length=255, blank=True)
+    image_url = models.URLField(max_length=365, blank=True)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="cuisines")
