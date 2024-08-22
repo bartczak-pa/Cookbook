@@ -30,6 +30,6 @@ class RecipeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
         context = super().get_context_data(**kwargs)
-        context["ingredients"] = self.object.ingredients.all()
+        # Remove this line as ingredients are already prefetched
         context["instructions"] = self.object.instructions.all()
         return context
