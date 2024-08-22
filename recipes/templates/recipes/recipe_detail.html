@@ -10,13 +10,13 @@
 
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <p><strong>Total Time:</strong> {{ recipe.content.total_time|duration_in_minutes }}</p>
+                    <p><strong>Total Time:</strong> {{ recipe.timing_info.total_time|duration_in_minutes }}</p>
                 </div>
                 <div class="col-md-4">
-                    <p><strong>Prep Time:</strong> {{ recipe.content.prep_time|duration_in_minutes }}</p>
+                    <p><strong>Prep Time:</strong> {{ recipe.timing_info.prep_time|duration_in_minutes }}</p>
                 </div>
                 <div class="col-md-4">
-                    <p><strong>Cook Time:</strong> {{ recipe.content.cook_time|duration_in_minutes }}</p>
+                    <p><strong>Cook Time:</strong> {{ recipe.timing_info.cook_time|duration_in_minutes }}</p>
                 </div>
             </div>
 
