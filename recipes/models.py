@@ -5,9 +5,7 @@ class Category(models.Model):
     """Model definition for Category."""
 
     name = models.CharField(max_length=100, unique=True)
-
-    # TODO@pawel: Add image field
-    # https://github.com/bartczak-pa/Cookbook/issues/1
+    image = models.ImageField(upload_to="category_images/", blank=True, null=True)
 
     class Meta:
         verbose_name = "Category"
