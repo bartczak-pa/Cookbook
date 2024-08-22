@@ -47,8 +47,11 @@ class Recipe(models.Model):
     """Model definition for Recipe."""
 
     title = models.CharField(max_length=255)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     original_link = models.URLField(max_length=255, blank=True)
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
+    courses = models.ManyToManyField(Course, related_name="recipes")
 
     class Meta:
         verbose_name = "Recipe"
@@ -62,8 +65,6 @@ class Content(models.Model):
     """Model definition for Content."""
 
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="content")
-    cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name="recipes")
-    courses = models.ManyToManyField(Course, related_name="recipes")
 
     class Meta:
         verbose_name = "Content"
