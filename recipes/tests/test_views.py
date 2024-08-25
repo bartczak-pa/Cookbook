@@ -90,9 +90,10 @@ class TestRecipeDetailView:
         ("slug", "category_slug", "expected_title"),
         [
             ("chocolate-cake", "desserts", "Chocolate Cake"),
-            ("vanilla-cake", "desserts", "Vanilla Cake"),  # This will not exist
+            ("vanilla-cake", "desserts", "Vanilla Cake"),
         ],
-        ids=["valid_recipe", "another_valid_recipe"],
+        ids=["valid_recipe", "non_existent_recipe"],
+    )
     )
     def test_get_object(self, setup: None, slug: str, category_slug: str, expected_title: str) -> None:
         request = self.factory.get(reverse("recipe_detail", kwargs={"slug": slug, "category_slug": category_slug}))
