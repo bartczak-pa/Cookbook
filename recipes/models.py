@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.text import slugify
 from django_extensions.db.fields import AutoSlugField
 
 
@@ -17,7 +16,7 @@ class Category(models.Model):
     """Model definition for Category."""
 
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True, blank=True)
+    slug = AutoSlugField(populate_from="name", unique=True)
     image = models.ImageField(
         upload_to="category_images/",
         blank=True,
@@ -32,11 +31,6 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-    def save(self, *args: dict, **kwargs: dict) -> None:
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
 
 class Course(models.Model):
