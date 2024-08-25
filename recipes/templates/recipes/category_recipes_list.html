@@ -12,7 +12,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ recipe.title }}</h5>
                 <p class="card-text">Total time: {{ recipe.timing_info.total_time|duration_in_minutes }}</p>
-                <a href="{% url "recipe_detail" recipe.pk %}" class="btn btn-primary">View</a>
+                
+                <a href="{% url 'recipe_detail' category_slug=recipe.category.slug slug=recipe.slug %}" class="btn btn-primary">View</a>
             </div>
         </div>
     </div>
