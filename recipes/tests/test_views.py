@@ -96,7 +96,7 @@ class TestRecipeDetailView:
             ("green-salad-with-vinaigrette", "appetizers", "Green Salad with Vinaigrette"),
             ("tiramisu_classic", "desserts", "Tiramisu Classic"),
         ],
-        ids=["valid_recipe", "non_existent_recipe", "another_category", "long_slug", "underscore_in_slug"]
+        ids=["valid_recipe", "non_existent_recipe", "another_category", "long_slug", "underscore_in_slug"],
     )
     def test_get_object(self, setup: None, slug: str, category_slug: str, expected_title: str) -> None:
         # Arrange
