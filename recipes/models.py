@@ -1,5 +1,7 @@
+
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import slugify
 
 
 def validate_image(image_obj: models.ImageField) -> None:
@@ -15,12 +17,13 @@ class Category(models.Model):
     """Model definition for Category."""
 
     name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
     image = models.ImageField(
         upload_to="category_images/",
         blank=True,
         null=True,
         validators=[validate_image],
-        help_text="Maximum file size allowed is 2Mb"
+        help_text="Maximum file size allowed is 2Mb",
     )
 
     class Meta:
@@ -29,6 +32,11 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args: dict, **kwargs: dict) -> None:
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class Course(models.Model):

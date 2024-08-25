@@ -1,4 +1,7 @@
-from django.db.models import Count
+from typing import Any
+
+from django.db.models import Count, QuerySet
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 
 from recipes.models import Category, Recipe
@@ -31,4 +34,20 @@ class RecipeDetailView(DetailView):
     def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
         context = super().get_context_data(**kwargs)
         context["instructions"] = self.object.instructions.all()
+        return context
+
+
+class CategoryRecipeListView(ListView):
+    model = Recipe
+    template_name = "recipes/category_recipes_list.html"  # Specify your template name
+    context_object_name = "recipes"  # Default is 'object_list'
+
+    def get_queryset(self) -> QuerySet[Recipe]:
+        # Get the category slug from the URL
+        category_slug = self.kwargs["slug"]
+        return Recipe.objects.filter(category__slug=category_slug)
+
+    def get_context_data(self, **kwargs: dict) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["category"] = get_object_or_404(Category, slug=self.kwargs["slug"])
         return context
