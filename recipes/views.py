@@ -28,20 +28,24 @@ class RecipeDetailView(DetailView):
     context_object_name = "recipe"
     template_name = "recipes/recipe_detail.html"
 
-    def get_queryset(self) -> Recipe:
-        return super().get_queryset().prefetch_related("ingredients", "instructions")
+    def get_queryset(self) -> QuerySet[Recipe]:
+        category_slug = self.kwargs["category_slug"]
+        if category_slug is None:
+            msg = "Category slug is required but not provided."
+            raise ValueError(msg)
+
+        return (
+            super()
+            .get_queryset()
+            .filter(category__slug=category_slug)
+            .select_related("cuisine")
+            .prefetch_related("ingredients", "instructions", "courses", "nutritional_info", "timing_info")
+        )
 
     def get_context_data(self, **kwargs: dict) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["instructions"] = self.object.instructions.all()
         return context
-
-    def get_object(self, queryset: None = None) -> Recipe:  # noqa: ARG002
-        # Get the recipe slug and category slug from the URL
-        slug = self.kwargs["slug"]
-        category_slug = self.kwargs["category_slug"]
-        # Retrieve the recipe based on the slug
-        return get_object_or_404(Recipe, slug=slug, category__slug=category_slug)
 
 
 class CategoryRecipeListView(ListView):

@@ -100,7 +100,7 @@ class TestRecipeDetailView:
         request = self.factory.get(reverse("recipe_detail", kwargs={"slug": slug, "category_slug": category_slug}))
         view = RecipeDetailView()
         view.request = request
-        view.kwargs = {"slug": slug, "category_slug": category_slug}
+        view.kwargs = {"slug": slug, "category_slug": category_slug}  # Ensure kwargs is set
 
         # Act & Assert
         if slug == "chocolate-cake":
@@ -123,7 +123,7 @@ class TestRecipeDetailView:
         request = self.factory.get(reverse("recipe_detail", kwargs={"slug": slug, "category_slug": category_slug}))
         view = RecipeDetailView()
         view.request = request
-        view.kwargs = {"slug": slug, "category_slug": category_slug}
+        view.kwargs = {"slug": slug, "category_slug": category_slug}  # Ensure kwargs is set
 
         # Act & Assert
         with pytest.raises(Http404):
@@ -135,13 +135,13 @@ class TestRecipeDetailView:
             reverse("recipe_detail", kwargs={"slug": "chocolate-cake", "category_slug": "desserts"}))
         view = RecipeDetailView()
         view.request = request
+        view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}  # Ensure kwargs is set
 
         # Act
         queryset = view.get_queryset()
 
         # Assert
         assert queryset.model == Recipe
-        # Check if the queryset is prefetched correctly
         assert queryset.prefetch_related("ingredients", "instructions").exists()
 
     def test_get_context_data(self, setup: None) -> None:
@@ -151,6 +151,7 @@ class TestRecipeDetailView:
         view = RecipeDetailView()
         view.request = request
         view.object = self.recipe
+        view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}  # Ensure kwargs is set
 
         # Act
         context = view.get_context_data()
