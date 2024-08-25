@@ -1,4 +1,3 @@
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
@@ -69,6 +68,7 @@ class Recipe(models.Model):
     """Model definition for Recipe."""
 
     title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
     original_link = models.URLField(max_length=255, blank=True)
     image_url = models.URLField(max_length=365, blank=True)
 
@@ -82,6 +82,11 @@ class Recipe(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def save(self, *args: dict, **kwargs: dict) -> None:
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 class NutritionalInfo(models.Model):

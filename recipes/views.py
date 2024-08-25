@@ -31,10 +31,17 @@ class RecipeDetailView(DetailView):
     def get_queryset(self) -> Recipe:
         return super().get_queryset().prefetch_related("ingredients", "instructions")
 
-    def get_context_data(self, **kwargs):  # noqa: ANN003, ANN201
+    def get_context_data(self, **kwargs: dict) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["instructions"] = self.object.instructions.all()
         return context
+
+    def get_object(self, queryset: None = None) -> Recipe:  # noqa: ARG002
+        # Get the recipe slug and category slug from the URL
+        slug = self.kwargs["slug"]
+        category_slug = self.kwargs["category_slug"]
+        # Retrieve the recipe based on the slug
+        return get_object_or_404(Recipe, slug=slug, category__slug=category_slug)
 
 
 class CategoryRecipeListView(ListView):
