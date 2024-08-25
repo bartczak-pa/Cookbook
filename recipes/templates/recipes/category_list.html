@@ -2,20 +2,18 @@
 {% load static %}
 {% block content %}
     {% if categories %}
-
         <div class="container text-center">
         <h1 class="mt-4 mb-4">Categories</h1>
             <div class="row justify-content-center mt-4">
                 {% for category in categories %}
                     <div class="col-md-4 mb-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="{{ category.image.url }}" class="card-img-top" alt="..." />
+                            {% if category.image %}<img src="{{ category.image.url }}" class="card-img-top" alt="..." />{% endif %} 
                             <div class="card-body">
-                                <!--TODO: Add category image -->
                                 <h5 class="card-title">{{ category.name }}</h5>
                                 <p class="card-text">Recipes: {{ category.recipe_count }}</p>
                                 <!--TODO: Replace link to category recipes list view -->
-                                <a href="#" class="btn btn-primary">See recipes</a>
+                                <a href="{% url "recipes_by_category" category.slug %}" class="btn btn-primary">See recipes</a>
                             </div>
                         </div>
                     </div>
