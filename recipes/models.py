@@ -1,11 +1,27 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+
+
+def validate_image(image_obj: models.ImageField) -> None:
+    """Validate image size and raise ValidationError if it exceeds limit."""
+    filesize: int = image_obj.file.size
+    megabyte_limit: float = 2.0
+    if filesize > megabyte_limit * 1024 * 1024:
+        msg: str = f"Max file size is {megabyte_limit}MB"
+        raise ValidationError(msg)
 
 
 class Category(models.Model):
     """Model definition for Category."""
 
     name = models.CharField(max_length=100, unique=True)
-    image = models.ImageField(upload_to="category_images/", blank=True, null=True)
+    image = models.ImageField(
+        upload_to="category_images/",
+        blank=True,
+        null=True,
+        validators=[validate_image],
+        help_text="Maximum file size allowed is 2Mb"
+    )
 
     class Meta:
         verbose_name = "Category"
