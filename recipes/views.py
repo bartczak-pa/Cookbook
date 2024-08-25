@@ -30,9 +30,11 @@ class RecipeDetailView(DetailView):
 
     def get_queryset(self) -> QuerySet[Recipe]:
         category_slug = self.kwargs["category_slug"]
-        if category_slug is None:
-            msg = "Category slug is required but not provided."
-            raise ValueError(msg)
+from django.http import Http404
+
+if category_slug is None:
+    msg = "Category slug is required but not provided."
+    raise Http404(msg)
 
         return (
             super()
