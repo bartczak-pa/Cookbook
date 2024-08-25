@@ -53,8 +53,6 @@ class CategoryRecipeListView(ListView):
     model = Recipe
     template_name = "recipes/category_recipes_list.html"
     paginate_by = 10
-    model = Recipe
-    template_name = "recipes/category_recipes_list.html"  # Specify your template name
     context_object_name = "recipes"  # Default is 'object_list'
 
     def get_queryset(self) -> QuerySet[Recipe]:
