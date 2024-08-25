@@ -1,10 +1,11 @@
 import pytest
 from django.http import Http404
-from django.test import RequestFactory
-from django.urls import reverse
+from django.test import RequestFactory, TestCase
+from django.urls import reverse, resolve
 
 from recipes.models import Category, Cuisine, Ingredient, Instruction, Recipe
 from recipes.views import CategoryRecipeListView, RecipeDetailView
+from recipes import views
 
 
 @pytest.mark.django_db
