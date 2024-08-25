@@ -54,3 +54,7 @@ line-ending = "auto"
     "ARG", # Unused function args -> fixtures nevertheless are functionally relevant.
 
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "cookbook.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]

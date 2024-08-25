@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django_extensions.db.fields import AutoSlugField
 
 
 def validate_image(image_obj: models.ImageField) -> None:
@@ -15,12 +16,13 @@ class Category(models.Model):
     """Model definition for Category."""
 
     name = models.CharField(max_length=100, unique=True)
+    slug = AutoSlugField(populate_from="name", unique=True)
     image = models.ImageField(
         upload_to="category_images/",
         blank=True,
         null=True,
         validators=[validate_image],
-        help_text="Maximum file size allowed is 2Mb"
+        help_text="Maximum file size allowed is 2Mb",
     )
 
     class Meta:
@@ -61,6 +63,7 @@ class Recipe(models.Model):
     """Model definition for Recipe."""
 
     title = models.CharField(max_length=255)
+    slug = AutoSlugField(populate_from="title", unique=True)
     original_link = models.URLField(max_length=255, blank=True)
     image_url = models.URLField(max_length=365, blank=True)
 
