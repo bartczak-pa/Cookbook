@@ -132,16 +132,16 @@ class TestRecipeDetailView:
         with pytest.raises(Http404):
             view.get_object()
 
-def test_get_queryset(self, setup: None) -> None:
-    request = self.factory.get(reverse("recipe_detail", kwargs={"slug": "chocolate-cake", "category_slug": "desserts"}))
-    view = RecipeDetailView()
-    view.request = request
-    view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}
-    queryset = view.get_queryset()
-    assert queryset.model == Recipe
-    assert queryset.prefetch_related("ingredients", "instructions").exists()
-    assert queryset.filter(category__slug="desserts").exists()
-    assert queryset.select_related("cuisine").exists()
+    def test_get_queryset(self, setup: None) -> None:
+        request = self.factory.get(reverse("recipe_detail", kwargs={"slug": "chocolate-cake", "category_slug": "desserts"}))
+        view = RecipeDetailView()
+        view.request = request
+        view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}
+        queryset = view.get_queryset()
+        assert queryset.model == Recipe
+        assert queryset.prefetch_related("ingredients", "instructions").exists()
+        assert queryset.filter(category__slug="desserts").exists()
+        assert queryset.select_related("cuisine").exists()
 
     def test_get_context_data(self, setup: None) -> None:
         request = self.factory.get(
