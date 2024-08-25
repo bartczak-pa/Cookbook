@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.db.models import Count, QuerySet
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 
@@ -30,19 +31,17 @@ class RecipeDetailView(DetailView):
 
     def get_queryset(self) -> QuerySet[Recipe]:
         category_slug = self.kwargs["category_slug"]
-from django.http import Http404
 
-if category_slug is None:
-    msg = "Category slug is required but not provided."
-    raise Http404(msg)
-
-        return (
-            super()
-            .get_queryset()
-            .filter(category__slug=category_slug)
-            .select_related("cuisine")
-            .prefetch_related("ingredients", "instructions", "courses", "nutritional_info", "timing_info")
-        )
+        if category_slug is not None:
+            return (
+                super()
+                .get_queryset()
+                .filter(category__slug=category_slug)
+                .select_related("cuisine")
+                .prefetch_related("ingredients", "instructions", "courses", "nutritional_info", "timing_info")
+                )
+        msg = "Category slug is required but not provided."
+        raise Http404(msg)
 
     def get_context_data(self, **kwargs: dict) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
