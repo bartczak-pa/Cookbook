@@ -144,17 +144,14 @@ def test_get_queryset(self, setup: None) -> None:
     assert queryset.select_related("cuisine").exists()
 
     def test_get_context_data(self, setup: None) -> None:
-        # Arrange
         request = self.factory.get(
             reverse("recipe_detail", kwargs={"slug": "chocolate-cake", "category_slug": "desserts"}))
         view = RecipeDetailView()
         view.request = request
         view.object = self.recipe
-        view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}  # Ensure kwargs is set
-
-        # Act
+        view.kwargs = {"slug": "chocolate-cake", "category_slug": "desserts"}
         context = view.get_context_data()
-
-        # Assert
+        assert "recipe" in context
+        assert context["recipe"] == self.recipe
         assert "instructions" in context
         assert list(context["instructions"]) == list(self.recipe.instructions.all())
